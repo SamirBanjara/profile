@@ -77,6 +77,7 @@ export const profile = {
       level: "Local governments",
       category: "Accounting & Budgeting",
       metric: { value: "753", label: "local governments" },
+      funder: { name: "USAID", logo: "/logos/usaid.svg", href: "https://www.usaid.gov/" },
       featured: true,
     },
     {
@@ -148,6 +149,7 @@ export const profile = {
     {
       short: "GBAS",
       logo: "/logos/dbworkshop.png",
+      logos: ["/logos/dbworkshop.png", "/logos/gorkhapatra.svg"],
       name: "Gorkhapatra Billing and Accounting System",
       description: "Billing and accounting system for Gorkhapatra.",
       org: "DBWorkshop and IT Support Pvt. Ltd.",
