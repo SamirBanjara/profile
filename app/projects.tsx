@@ -52,14 +52,30 @@ export function Projects() {
               />
               <div className={featured ? "lg:max-w-xl" : "flex-1"}>
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="mr-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-white p-1.5">
-                    {"logo" in p && p.logo ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src={p.logo} alt="" loading="lazy" className="h-full w-full object-contain" />
-                    ) : (
-                      <span className="text-sm font-bold text-accent">{p.short.slice(0, 2)}</span>
-                    )}
-                  </span>
+                  {(() => {
+                    const logos: string[] =
+                      "logos" in p && p.logos ? p.logos : "logo" in p && p.logo ? [p.logo] : [];
+                    if (logos.length === 0) {
+                      return (
+                        <span className="mr-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-white p-1.5">
+                          <span className="text-sm font-bold text-accent">{p.short.slice(0, 2)}</span>
+                        </span>
+                      );
+                    }
+                    return (
+                      <span className="mr-1 flex items-center gap-2">
+                        {logos.map((src) => (
+                          <span
+                            key={src}
+                            className="flex h-10 min-w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-white px-1.5 py-1.5"
+                          >
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={src} alt="" loading="lazy" className="h-full w-auto max-w-28 object-contain" />
+                          </span>
+                        ))}
+                      </span>
+                    );
+                  })()}
                   <span className="rounded-md bg-accent-soft px-2 py-0.5 font-mono text-xs font-semibold text-accent">
                     {p.short}
                   </span>
@@ -74,6 +90,19 @@ export function Projects() {
                   {p.name}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">{p.description}</p>
+                {"funder" in p && p.funder && (
+                  <a
+                    href={p.funder.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`Funded by ${p.funder.name}`}
+                    className="mt-4 inline-flex items-center gap-3 rounded-xl border border-border bg-white px-3 py-1.5 transition hover:border-accent hover:shadow-md"
+                  >
+                    <span className="text-[11px] font-medium uppercase tracking-wider text-zinc-500">Funded by</span>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={p.funder.logo} alt={p.funder.name} loading="lazy" className="h-8 w-auto" />
+                  </a>
+                )}
               </div>
 
               <div className={featured ? "mt-6 lg:mt-0 lg:text-right" : "mt-5"}>
